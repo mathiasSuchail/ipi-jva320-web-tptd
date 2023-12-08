@@ -9,10 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
     @Autowired
-    private SalarieAideADomicileService salarieAideADomicileService;
+    private CommonController commonController;
+
     @GetMapping({"/", "/home"})
-    public String home(ModelMap model){
-        model.put("countSalaries", salarieAideADomicileService.countSalaries());
+    public String home(ModelMap modelMap){
+        modelMap.addAllAttributes(commonController.getCommonValue());
         return "home";
     }
 }
