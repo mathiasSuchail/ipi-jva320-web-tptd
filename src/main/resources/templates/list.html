@@ -23,7 +23,7 @@
             <a href="/salaries?page=0&size=10&sortProperty=id&sortDirection=DESC"><i class="fa fa-chevron-up"></i></a>
           </th>
           <th scope="col">Nom
-            <a href="/salaries?page=0&size=10&sortProperty=nom&sortDirection=DESC"><i class="fa fa-chevron-up"></i></a>
+            <a th:if="${sortDirection=='ASC'}" href="/salaries?page=0&size=10&sortProperty=nom&sortDirection=DESC"><i class="fa fa-chevron-up"></i></a>
           </th>
           <th scope="col"></th>
         </tr>

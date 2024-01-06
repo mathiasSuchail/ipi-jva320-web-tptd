@@ -13,6 +13,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,16 +46,33 @@ public class SalarieController {
     }
 
     @GetMapping("")
-    public String listSalaries(ModelMap modelMap, @RequestParam(name = "nom", required = false) String nom){
+    public String listSalaries(ModelMap modelMap, @RequestParam(name = "nom", required = false) String nom, @RequestParam(name = "page", required = false) Integer page, @RequestParam(name = "size", required = false) Integer size, @RequestParam(name = "sortProperty", required = false) String sortProperty, @RequestParam(name = "sortDirection", required = false) String sortDirection){
         modelMap.addAllAttributes(commonController.getCommonValue());
         List<SalarieAideADomicile> salarieAideADomicileList;
+
+        if(page==null || page<=0) page=1;
+        if(size==null) size=10;
+        if(sortProperty==null) sortProperty = "id";
+        if(sortDirection==null) sortDirection = "ASC";
+        long skip = page*size-size;
+        if (skip<0) skip = 0;
+
+        modelMap.put("sortDirection", sortDirection);
 
         if(nom!=null){
             salarieAideADomicileList = salarieAideADomicileService.getSalaries().stream().filter(salarieAideADomicile -> salarieAideADomicile.getNom().toLowerCase().contains(nom.toLowerCase())).collect(Collectors.toList());
         }else {
             salarieAideADomicileList = salarieAideADomicileService.getSalaries();
         }
+        if(sortProperty.equals("id")){
+            salarieAideADomicileList = salarieAideADomicileList.stream().sorted(Comparator.comparing(SalarieAideADomicile::getId)).collect(Collectors.toList());
+        }
+        else{
+            salarieAideADomicileList = salarieAideADomicileList.stream().sorted(Comparator.comparing(salarieAideADomicile -> salarieAideADomicile.getNom().toLowerCase())).collect(Collectors.toList());
+        }
+        if(sortDirection.equals("DESC")) Collections.reverse(salarieAideADomicileList);
 
+        salarieAideADomicileList = salarieAideADomicileList.stream().skip((skip)).limit(size).collect(Collectors.toList());
         modelMap.put("salaries", salarieAideADomicileList);
         return "list";
     }
