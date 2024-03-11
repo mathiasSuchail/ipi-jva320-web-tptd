@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
     <title>Aide à domicile RH - gestion des salariés</title>
@@ -101,6 +101,28 @@
             <li class="list-group-item">
                 <h4 class="list-group-item-heading">BONUS TP - Utilisation pour les 2 d'un seul fragment qui est paramétré</h4>
                 <p class="list-group-item-text">Utiliser dans les 2 cas vus de fragments plutôt un seul fragment qui soit paramétré (faire une sauvegarde des pages à modifier d'abord dans u sous-dossier).</p>
+            </li>
+
+            <li class="list-group-item">
+                <h4 class="list-group-item-heading">TD après la correction  - divers</h4>
+                <p class="list-group-item-text">rajouter le logo de thymeleaf (à prendre sur le site de thymeleaf) à gauche de la barre de navigation. Je vous laisse deviner l'attribut HTML à dynamiser par th.:</p>
+                <p class="list-group-item-text">rajouter un message internationalisé en anglais et français dans les fichiers messages(_fr).properties comme vu en cours :
+                    <code>
+                    titre_logo=Thymeleaf logo
+                    titre_logo=logo de Thymeleaf
+                    </code>
+                </p>
+                <p class="list-group-item-text">rajouter au même élément HTML les attributs HTML title et alt dynamises en une seule fois magiquement ainsi:
+                    th:alt-title="#{titre_logo}"</p>
+                <p class="list-group-item-text">tester les commentaires Thymeleaf en écrivant du code Thymeleaf qui fait exploser votre template (facile !), puis refaire marcher votre template en commentant ce code ainsi :
+                    <code>
+                    <!--/*-->
+                    ...
+                    <!--*/-->
+                    </code>
+                </p>
+                <p class="list-group-item-text">pour les experts, tester l'intérêt du preprocessing pour l'internationalisation avec un
+                    th:text="${__#{mon_message}__}"</p>
             </li>
         </ul>
     </div>
